@@ -1,4 +1,4 @@
-package cybertron.input;
+package cybertron.util;
 
 import java.util.Scanner;
 

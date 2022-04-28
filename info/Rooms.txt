@@ -1,0 +1,57 @@
+--------Stars: 1 *
+Capacity: 1
+Available: 20
+
+Capacity: 2
+Available: 15
+
+Capacity: 4
+Available: 10
+
+
+
+--------Stars: 2 **
+Capacity: 1
+Available: 20
+
+Capacity: 2
+Available: 15
+
+Capacity: 4
+Available: 10
+
+
+
+--------Stars: 3 ***
+Capacity: 1
+Available: 20
+
+Capacity: 2
+Available: 15
+
+Capacity: 4
+Available: 10
+
+
+
+--------Stars: 4 ****
+Capacity: 1
+Available: 15
+
+Capacity: 2
+Available: 10
+
+Capacity: 4
+Available: 5
+
+
+
+--------Stars: 5 *****
+Capacity: 1
+Available: 10
+
+Capacity: 2
+Available: 5
+
+Capacity: 4
+Available: 2

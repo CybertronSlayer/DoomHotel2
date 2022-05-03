@@ -1,22 +1,21 @@
 package cybertron.model;
 
+import java.time.LocalDate;
+
 public class Room {
-    Integer stars;
-    Integer capacity;
-    Integer available;
-    Integer number;
+    public Integer roomNumber;
+    public LocalDate startingDate;
+    public LocalDate exitingDate;
 
-    Room(Integer stars, Integer capacity, Integer available,Integer number) {
-        this.stars = stars;
-        this.capacity = capacity;
-        this.available = available;
-        this.number = number;
+
+
+    public Room(Integer roomNumber, LocalDate date, LocalDate exitingDate){
+        this.roomNumber = roomNumber;
+        this.startingDate = date;
+        this.exitingDate = exitingDate;
     }
 
-    Integer getRoomNumber(){
-        return this.number;
-    }
-    void setRoomNumber(Integer roomNumber){
-        this.number = number;
-    }
+
+
+
 }

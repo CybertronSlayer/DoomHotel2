@@ -1,0 +1,11 @@
+Ioannis Tzortzinis 6977777777 241 2022-05-02 2022-05-04
+    |         |          |     |        |           |
+//firstName, lastName, phone, roomN, startDate, exitDate
+
+
+Ioannis Tzortzinis 6977777777 241 2022-05-02 2022-05-04,412 2022-05-02 2022-05-06
+    |         |          |     |        |           |     |          |          |
+//firstName, lastName, phone, roomN, startDate, exitDate,roomNumber,startDate, exitDate
+
+
+Ioannis Tzortzinis null null null null

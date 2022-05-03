@@ -14,7 +14,10 @@ public class CustomerParser {
 
     static Path path = Path.of("C:\\Users\\Iwann\\Desktop\\DoomHotel2\\Data\\Customer.txt");
 
+    public List<Room> allRooms = new ArrayList<>();
+
     public List<Customer> takeFromFile(){
+        allRooms = getRoomList();
         List<String> lines = getLines();
         List<Customer> customerList = new ArrayList<>();
         for (var line : lines){
@@ -38,9 +41,15 @@ public class CustomerParser {
         }
         // DANGER !
         if (attributes.length < 3) {
-            return null;
+            return new Customer(firstName,lastName,phoneNumber,null);
         }
-        
+        //List<Room> roomList = getRoomList();
+        return new Customer(firstName,lastName,phoneNumber,allRooms);
+    }
+
+    protected List<Room> getRoomList(){
+        RoomParser roomParser = new RoomParser();
+        return roomParser.takeFromFile();
     }
 
     protected List<Room> getRoomList(String[] attributes,String line) {
@@ -48,6 +57,15 @@ public class CustomerParser {
         if (attributes.length < 3) {
             return null;
         }
+
+        var spaceFirst = line.indexOf(" ");
+        var lineWithoutFname = line.substring(spaceFirst);
+        var spaceSecond = lineWithoutFname.indexOf(" ");
+        var lineWithoutFLname = lineWithoutFname.substring(spaceSecond);
+        var spaceThird = lineWithoutFLname.indexOf(" ");
+        var lineRoom = lineWithoutFLname.substring(spaceThird);
+
+
         // DANGER !
         var roomNumber = Integer.parseInt(attributes[3]);
         var startingDate = LocalDate.parse(attributes[4]);

@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CustomerParser {
 
@@ -38,9 +39,24 @@ public class CustomerParser {
         }
         // DANGER !
         if (attributes.length < 3) {
-            return null;
+            return new Customer(firstName,lastName,phoneNumber,null);
         }
-        
+
+        var room = new ArrayList<Room>();
+
+        if (attributes.length > 3){
+            parseRooms(room, attributes);
+        }
+
+        return new Customer(firstName,lastName,phoneNumber,);
+    }
+
+    private void parseRooms(ArrayList<Room> room, String[] attributes) {
+        for (int i = 3; i + 3 < attributes.length; i+=3){
+            var a = attributes[i];
+            var b = attributes[i + 1];
+            var c = attributes[i + 2];
+        }
     }
 
     protected List<Room> getRoomList(String[] attributes,String line) {
@@ -53,6 +69,8 @@ public class CustomerParser {
         var startingDate = LocalDate.parse(attributes[4]);
         var exitingDate = LocalDate.parse(attributes[5]);
 
+
+
         Room room = new Room(roomNumber,startingDate,exitingDate);
         return List.of(room);
     }
@@ -64,8 +82,8 @@ public class CustomerParser {
 ////                var exitingDate = attributes[i+2];
 ////            }
 //        }
-
-
+//
+//
 //        List<Room> rooms = new ArrayList<>();
 //        for (var room : rooms) {
 //            var roomNumber = ;

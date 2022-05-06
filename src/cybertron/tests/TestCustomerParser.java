@@ -34,7 +34,7 @@ public class TestCustomerParser extends CustomerParser {
         List<Customer> customerList = takeFromFile();
         Customer customer = customerList.get(0);
 
-        List<Room> roomList = getRoomList();
+//        List<Room> roomList = getRoomList();
 
         assertEquals(1,lines.size());
 

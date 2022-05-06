@@ -25,7 +25,13 @@ public class CustomerSerializer {
     protected String toLine(Customer customer){
 
         return customer.firstName + " " + customer.lastName + " " + customer.phoneNumber
-               + " " + findRoomList(customer) ;
+               + " " + findUuid(customer);
+    }
+
+    private String findUuid(Customer customer) {
+
+
+        return customer.uuid.toString();
     }
 
     private String findRoomList(Customer customer) {

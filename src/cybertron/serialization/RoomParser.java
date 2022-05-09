@@ -40,7 +40,7 @@ public class RoomParser {
         LocalDate startingDate =  LocalDate.parse(attributes[1]); //,formatter);
         LocalDate expiringDate = LocalDate.parse(attributes[2]);//,formatter);
 
-        Room room = new Room(roomNumber,startingDate,expiringDate);
+        Room room = new Room(roomNumber);
         roomList.add(room);
     }
 

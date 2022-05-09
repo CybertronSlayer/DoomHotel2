@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.LoggingPermission;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,13 +29,12 @@ public class TestRoomParser extends RoomParser {
 //    }
 
     @Test
-    @DisplayName("Test one Room - Line")
-    void testOneRoomLine() {
-        var roomNumber = 241;
-        var startingDate = LocalDate.now();
-        var exitingDate = LocalDate.now().plusDays(3);
+    @DisplayName("Test one Room without Uuid")
+    void testOneRoomLineWithoutUuid() {
+        Integer roomNumber = 241;
         //lines.add(roomNumber + " " + startingDate + " " + exitingDate);
-        lines = List.of(roomNumber + " " + startingDate + " " + exitingDate);
+        lines = List.of(roomNumber.toString());
+
 
         List<Room> allRooms = takeFromFile();
 
@@ -42,25 +42,42 @@ public class TestRoomParser extends RoomParser {
 
         var line = lines.get(0);
         Room room = allRooms.get(0);
-        var expectedLine = room.roomNumber + " " + room.startingDate + " " + room.exitingDate;
+        String expectedLine = room.roomNumber.toString();
 
         assertEquals(line,expectedLine);
 
     }
 
     @Test
-    @DisplayName("Test Two Rooms")
+    @DisplayName("Test one room with uuid")
+    void testOneRoomWithUuid() {
+        Integer roomNumber = 241;
+        UUID uuid = UUID.randomUUID();
+        lines = List.of(roomNumber.toString() + " " + uuid);
+
+
+        List<Room> allRooms = takeFromFile();
+
+        assertEquals(1,lines.size());
+
+        var line = lines.get(0);
+        Room room = allRooms.get(0);
+        String expectedLine = room.roomNumber.toString() + room.uuid;
+
+        assertEquals(line,expectedLine);
+
+    }
+
+    @Test
+    @DisplayName("Test Two Rooms With Two Uuids")
     void testTwoRooms() {
         var roomNumber = 241;
-        var startingDate = LocalDate.now();
-        var exitingDate = LocalDate.now().plusDays(3);
+        UUID uuid1 = UUID.randomUUID();
+        UUID uuid2 = UUID.randomUUID();
 
-        var roomNumber2 = 241;
-        var startingDate2 = LocalDate.now();
-        var exitingDate2 = LocalDate.now().plusDays(3);
+        var roomNumber2 = 242;
 
-        //lines.add(roomNumber + " " + startingDate + " " + exitingDate);
-        lines = List.of(roomNumber + " " + startingDate + " " + exitingDate,roomNumber2 + " " + startingDate2 + " " + exitingDate2);
+        lines = List.of(roomNumber + " " + uuid1 + " " + uuid2,roomNumber2 + " " + uuid1 + " " + uuid2);
 
         List<Room> allRooms = takeFromFile();
 
@@ -68,13 +85,13 @@ public class TestRoomParser extends RoomParser {
 
         var line = lines.get(0);
         Room room = allRooms.get(0);
-        var expectedLine = room.roomNumber + " " + room.startingDate + " " + room.exitingDate;
+        var expectedLine = room.roomNumber + " " + room.uuid + " " + room.uuid;
 
         assertEquals(line,expectedLine);
 
         var line2 = lines.get(1);
         Room room2 = allRooms.get(1);
-        var expectedLine2 = room2.roomNumber + " " + room2.startingDate + " " + room2.exitingDate;
+        var expectedLine2 = room2.roomNumber + " " + room2.uuid + " " + room2.uuid;
 
         assertEquals(line2,expectedLine2);
     }

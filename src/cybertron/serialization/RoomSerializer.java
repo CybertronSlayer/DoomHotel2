@@ -23,7 +23,11 @@ public class RoomSerializer {
 
 
     protected String toLine(Room room) {
-        var line = room.roomNumber + " " + room.startingDate + " " + room.exitingDate;
+        if (room.uuid.equals("null")){
+            String line = room.roomNumber.toString();
+            return line;
+        }
+        String line = room.roomNumber + " " + room.uuid;
         return line;
     }
 

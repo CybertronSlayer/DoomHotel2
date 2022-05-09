@@ -1,5 +1,6 @@
 package cybertron.tests;
 
+import cybertron.model.Appointment;
 import cybertron.model.Customer;
 import cybertron.model.Room;
 import cybertron.serialization.CustomerSerializer;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,15 +27,17 @@ public class TestCustomerSerializer extends CustomerSerializer {
     @Test
     @DisplayName("Test a single customer")
     void testASingleCustomer() {
-        Room room = new Room(241,LocalDate.now(),LocalDate.now().plusDays(2));
+        Appointment appointment = new Appointment(UUID.randomUUID());
+//        List<UUID> uuidList = new ArrayList<>();
+//        uuidList.add(appointment.uuid);
 
-        var customer = new Customer("Ioannis","Tzortzinis",6944668887L,List.of(room));
+        var customer = new Customer("Ioannis","Tzortzinis",6944668887L,List.of(appointment));
         saveCustomer(List.of(customer));
 
         assertEquals(1,lines.size());
 
         var line = lines.get(0);
-        var expectedLine = customer.firstName + " " + customer.lastName + " " + customer.phoneNumber + " " + findCustomerRoomList(customer);;
+        var expectedLine = customer.firstName + " " + customer.lastName + " " + customer.phoneNumber + " " + customer.appointmentList.get(0).uuid;
         assertEquals(line,expectedLine);
 
 
@@ -42,20 +46,23 @@ public class TestCustomerSerializer extends CustomerSerializer {
     @Test
     @DisplayName("Test two customers")
     void testTwoCustomers() {
-        Room room1 = new Room(241,LocalDate.now(),LocalDate.now().plusDays(2));
-        Room room2 = new Room(412, LocalDate.now(),LocalDate.now().plusDays(4));
-        var customer1 = new Customer("Ioannis","Tzortzinis",6944668887L,List.of(room1));
-        var customer2 = new Customer("Ioannis","Tzortzinis",6944668887L,List.of(room2));
+        //Room room1 = new Room(241,LocalDate.now(),LocalDate.now().plusDays(2));
+        //Room room2 = new Room(412, LocalDate.now(),LocalDate.now().plusDays(4));
+        Appointment appointement1 = new Appointment(UUID.randomUUID());
+        Appointment appointement2 = new Appointment(UUID.randomUUID());
+
+        var customer1 = new Customer("Ioannis","Tzortzinis",6944668887L,List.of(appointement1));
+        var customer2 = new Customer("Ioannis","Tzortzinis",6944668887L,List.of(appointement2));
         saveCustomer(List.of(customer1,customer2));
 
         assertEquals(2,lines.size());
 
         var line = lines.get(0);
-        var expectedLine = customer1.firstName + " " + customer1.lastName + " " + customer1.phoneNumber + " " + findCustomerRoomList(customer1);
+        var expectedLine = customer1.firstName + " " + customer1.lastName + " " + customer1.phoneNumber + " " + findUuid(customer1);
         assertEquals(line,expectedLine);
 
         var line2 = lines.get(1);
-        var expectedLine2 = customer1.firstName + " " + customer1.lastName + " " + customer1.phoneNumber + " " + findCustomerRoomList(customer2);
+        var expectedLine2 = customer1.firstName + " " + customer1.lastName + " " + customer1.phoneNumber + " " + findUuid(customer2);
         assertEquals(line2,expectedLine2);
     }
 
@@ -70,36 +77,38 @@ public class TestCustomerSerializer extends CustomerSerializer {
 
 
     @Test
-    @DisplayName("Test One customer with Two rooms")
-    void testOneCustomerWithTwoRooms() {
-        Room room1 = new Room(241,LocalDate.now(),LocalDate.now().plusDays(2));
-        Room room2 = new Room(412, LocalDate.now(),LocalDate.now().plusDays(4));
-        var customer = new Customer("Ioannis","Tzortzinis",6944668887L,List.of(room1,room2));
+    @DisplayName("Test One customer with Two uuids")
+    void testOneCustomerWithTwoUuid() {
+//        Room room1 = new Room(241,LocalDate.now(),LocalDate.now().plusDays(2));
+//        Room room2 = new Room(412, LocalDate.now(),LocalDate.now().plusDays(4));
+        Appointment appointement1 = new Appointment(UUID.randomUUID());
+        Appointment appointement2 = new Appointment(UUID.randomUUID());
+        var customer = new Customer("Ioannis","Tzortzinis",6944668887L,List.of(appointement1,appointement2));
         saveCustomer(List.of(customer));
 
         assertEquals(1,lines.size());
 
         var line = lines.get(0);
-        var expectedLine = customer.firstName + " " + customer.lastName + " " + customer.phoneNumber + " " + findCustomerRoomList(customer);;
+        var expectedLine = customer.firstName + " " + customer.lastName + " " + customer.phoneNumber + " " + findUuid(customer);;
         assertEquals(line,expectedLine);
 
     }
 
-    private String findCustomerRoomList(Customer customer) {
-        if (customer.roomList.isEmpty()){
-            return "";
-        }
-        StringBuilder str1 = new StringBuilder();
-
-        for (Room room : customer.roomList) {
-            str1.append(room.roomNumber).append(" ")
-                    .append(room.startingDate).append(" ")
-                    .append(room.exitingDate).append(",");
-        }
-        str1.deleteCharAt(str1.length() - 1);
-
-        return str1.toString();
-    }
+//    private String findCustomerRoomList(Customer customer) {
+//        if (customer.roomList.isEmpty()){
+//            return "";
+//        }
+//        StringBuilder str1 = new StringBuilder();
+//
+//        for (Room room : customer.roomList) {
+//            str1.append(room.roomNumber).append(" ")
+//                    .append(room.startingDate).append(" ")
+//                    .append(room.exitingDate).append(",");
+//        }
+//        str1.deleteCharAt(str1.length() - 1);
+//
+//        return str1.toString();
+//    }
 
 
 //    private String findCustomerRoomList(Room room) {

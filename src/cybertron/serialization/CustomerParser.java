@@ -1,5 +1,6 @@
 package cybertron.serialization;
 
+import cybertron.model.Appointment;
 import cybertron.model.Customer;
 import cybertron.model.Room;
 
@@ -39,16 +40,20 @@ public class CustomerParser {
         }
         // DANGER !
         if (attributes.length < 3) {
-            return new Customer(firstName,lastName,phoneNumber,null);
+            return new Customer(firstName,lastName,phoneNumber);
         }
+        // FIX !        -for every UUID-
+        var uuid = UUID.fromString(attributes[3]);
+        Appointment appointment = new Appointment(uuid);
+        return new Customer(firstName,lastName,phoneNumber,List.of(appointment));
+    }
 
-        var room = new ArrayList<Room>();
-
-        if (attributes.length > 3){
-            parseRooms(room, attributes);
+    protected List<String> getLines() {
+        try {
+            return Files.readAllLines(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        return new Customer(firstName,lastName,phoneNumber,);
     }
 
     private void parseRooms(ArrayList<Room> room, String[] attributes) {
@@ -59,21 +64,21 @@ public class CustomerParser {
         }
     }
 
-    protected List<Room> getRoomList(String[] attributes,String line) {
-        // Null check <--
-        if (attributes.length < 3) {
-            return null;
-        }
-        // DANGER !
-        var roomNumber = Integer.parseInt(attributes[3]);
-        var startingDate = LocalDate.parse(attributes[4]);
-        var exitingDate = LocalDate.parse(attributes[5]);
-
-
-
-        Room room = new Room(roomNumber,startingDate,exitingDate);
-        return List.of(room);
-    }
+//    protected List<Room> getRoomList(String[] attributes,String line) {
+//        // Null check <--
+//        if (attributes.length < 3) {
+//            return null;
+//        }
+//        // DANGER !
+//        var roomNumber = Integer.parseInt(attributes[3]);
+//        var startingDate = LocalDate.parse(attributes[4]);
+//        var exitingDate = LocalDate.parse(attributes[5]);
+//
+//
+//
+//        Room room = new Room(roomNumber,startingDate,exitingDate);
+//        return List.of(room);
+//    }
 //        for (int i = 3; i < attributes.length ; i++) {
 //
 ////            for (var e : attributes) {
@@ -91,14 +96,5 @@ public class CustomerParser {
 //            var exitingDate = ;
 //        }
 
-
-
-    protected List<String> getLines() {
-        try {
-            return Files.readAllLines(path);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 }

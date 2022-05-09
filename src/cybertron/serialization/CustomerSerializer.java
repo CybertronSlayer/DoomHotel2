@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CustomerSerializer {
 
@@ -28,24 +29,26 @@ public class CustomerSerializer {
                + " " + findUuid(customer);
     }
 
-    private String findUuid(Customer customer) {
-
-
-        return customer.uuid.toString();
+    protected List<UUID> findUuid(Customer customer) {
+        List <UUID> uuids = new ArrayList<>();
+        for (int i = 0; i < customer.appointmentList.size() ; i++) {
+            var uuid = customer.appointmentList.get(i).uuid;
+            uuids.add(uuid);
+        } return uuids;
     }
 
-    private String findRoomList(Customer customer) {
-        if (customer.roomList.isEmpty()){
-            return "";
-        }
-
-        StringBuilder str = new StringBuilder();
-        for (Room room : customer.roomList){
-            str.append(room.roomNumber).append(" ").append(room.startingDate).append(" ").append(room.exitingDate).append(",");
-        }
-        str.deleteCharAt(str.length() -1 );
-        return str.toString();
-    }
+//    private String findRoomList(Customer customer) {
+//        if (customer.roomList.isEmpty()){
+//            return "";
+//        }
+//
+//        StringBuilder str = new StringBuilder();
+//        for (Room room : customer.roomList){
+//            str.append(room.roomNumber).append(" ").append(room.startingDate).append(" ").append(room.exitingDate).append(",");
+//        }
+//        str.deleteCharAt(str.length() -1 );
+//        return str.toString();
+//    }
 
     protected void saveToFile(List<String> lines){
         try{

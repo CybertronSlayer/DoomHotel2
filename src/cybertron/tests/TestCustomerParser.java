@@ -39,7 +39,7 @@ public class TestCustomerParser extends CustomerParser {
         assertEquals(1,lines.size());
 
         var line = lines.get(0);
-        var expectedLine = customer.firstName + " " + customer.lastName + " " + customer.phoneNumber + " " + ;
+        var expectedLine = customer.firstName + " " + customer.lastName + " " + customer.phoneNumber + " " + customer.appointmentList.get(0).uuid;
 
         assertEquals(line,expectedLine);
 
